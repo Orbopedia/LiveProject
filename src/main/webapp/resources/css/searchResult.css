@@ -1,0 +1,125 @@
+body {
+/*			background-image: url(http://ppcdn.500px.org/75319705/1991f76c0c6a91ae1d23eb94ac5c7a9f7e79c480/2048.jpg) ;*/
+/*            background-image:url(http://wallpaperget.com/images/computer-wallpaper-full-hd-47.jpg);*/
+background-image:url(../media/backresult.jpeg);
+			background-position: center center;
+			background-repeat:  no-repeat;
+			background-attachment: fixed;
+			background-size:  cover;
+			background-color: #999;
+}
+
+a{
+  text-decoration: none;
+}
+
+#search-box {
+  position: relative;
+  width: 200px;
+  margin:0;
+}
+#search-box-small {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding-top: 5px;
+}
+
+#search-form {
+  height: 45px;
+  border: 1px solid #d0d2d8;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0px 5px 25px -12px; grey;
+  height: 42px;
+}
+
+#search-text {
+  font-size: 14px;
+  color: #ddd;
+  border-width: 0;
+  background: transparent;
+}
+
+#search-box input[type="text"] {
+  width: 100%;
+  padding: 11px 50px 12px 1em;
+  color: white;
+  outline: none;
+}
+
+#search-box-small input[type="text"]{
+  width: 100%;
+  padding: 11px 50px 12px 1em;
+  color: white;
+  outline: none;
+}
+
+#search-button {
+  position: absolute;
+  padding-top: 3px;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 50px;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  line-height: 42px;
+  border-width: 0;
+  background-color:transparent;
+  -webkit-border-radius: 0px 10px 10px 0px;
+  -moz-border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 10px 10px 0px;
+  cursor: pointer;
+}
+
+#search-button-small {
+  position: absolute;
+  padding-top: 5px;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 50px;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  line-height: 42px;
+  border-width: 0;
+  background-color:transparent;
+  -webkit-border-radius: 0px 10px 10px 0px;
+  -moz-border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 10px 10px 0px;
+  cursor: pointer;
+}
+#search-button:hover{
+  color:white;
+}
+
+#sbar{
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#result_large{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+#result_med{
+	margin-left: 10px;
+	margin-right: 10px
+}
+
+#result_card{
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+#search_card{
+	border: 1px solid white;
+}
+
+#place_link{
+	border:1px solid white;
+}

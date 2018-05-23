@@ -1,0 +1,97 @@
+body{
+    margin: 0 auto;
+    background: transparent;
+}
+a{
+    color: black;
+}
+
+#footer-links.a{
+    text-decoration: underline;
+}
+
+.page-front{
+    position: relative;
+    background-image: url('../media/landscape.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.front-div{
+    min-height:550px;
+}
+
+.front-img{
+    width:100%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    -ms-transform:translate(-50%,-50%);
+    position:absolute;
+}
+
+.front-img > h1{
+    font-family: 'Courgette', cursive;
+    font-size: 60px;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+#orbopedia-logo{
+    height: 50px;
+    width: 200px;
+}
+
+#country-flag{
+    height: 100%;
+    width: 100%;
+}
+
+#small-parallax{
+    height: 150px;
+}
+
+#medium-parallax{
+    height: 200px;
+}
+
+#large-parallax{
+    height: 250px;
+}
+
+#map{
+    min-height: 350px;
+    height:500px;
+    width: 100%;
+}
+
+#section-header{
+    font-size: 5vmin;
+}
+
+.about-place{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    max-height:450px;
+    overflow:scroll;
+}
+
+.video-container{
+    min-height:250px;
+    box-shadow: 0px 3px 50px black;
+}
+
+#top-sights{
+    height: 250px;
+    width: 100%;
+    box-shadow: 0px 3px 50px black;
+}
+
+#top-sights-title{
+    padding-bottom: 20px;
+    color: teal;
+    text-decoration: underline;
+}

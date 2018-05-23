@@ -1,0 +1,712 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Map"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<jsp:useBean id="DataClass" class="com.handsontech.model.City"
+	scope="page"></jsp:useBean>
+<jsp:useBean id="ResourceClass"
+	class="com.handsontech.beans.ResourcesBeans" scope="page"></jsp:useBean>
+<jsp:useBean id="Database" class="com.handsontech.service.Database"
+	scope="page"></jsp:useBean>
+<%
+	int PID = 1;
+	request.setAttribute("PlaceID",PID+"");
+	String CityName = DataClass.getCity(PID);
+	if(CityName == null){
+		RequestDispatcher rd = request.getRequestDispatcher("Place404.jsp");
+		rd.forward(request, response);
+	}
+	ResourceClass.LoadParserDetails(PID, DataClass.getJSONPath());
+%>
+<title><%=CityName%></title>
+<meta charset="utf-8" name="viewport"
+	content="width=device-width, initial-scale=1">
+<!--CSS-->
+
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/HomePage.css"/>">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/w3.css"/>">
+<link href="https://fonts.googleapis.com/css?family=Courgette"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Raleway"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--JS-->
+<script type="text/javascript"
+	src="<c:url value="/resources/js/HomePage.js"/>"></script>
+
+<style>
+#bg {
+	background-image:url('<c:url value="/resources/Images/CoverPICS/PID${PlaceID}.jpg"/>');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+</style>
+</head>
+<body>
+
+	<!--START main class, SEO:Travel-->
+	<div class="Travel">
+
+		<!--START head for pc, SEO:-->
+		<div class="">
+
+			<div id="bg"
+				class="w3-container w3-padding-large w3-card-4 w3-hide-small w3-hide-medium"
+				style="position: relative;">
+				<div
+					class="w3-bar w3-padding-large w3-border-bottom w3-border-white">
+					<div class="w3-bar w3-transparent w3-center w3-padding-large">
+						<input id="ttab1" type="text"
+							class="w3-bar-item w3-input w3-white w3-padding-large w3-opacity"
+							placeholder="Search <%=CityName%>...">
+						<button id="ttab2"
+							class="w3-bar-item w3-white w3-padding-large w3-opacity">
+							<i class="fa fa-search w3-large"></i>
+						</button>
+						<%
+							if (((String) request.getAttribute("status")) == null) {
+								out.print(
+										"<a href='Consollogin.jsp' id='ttab2' class='w3-button w3-right w3-padding-large w3-white w3-opacity w3-center'>Login</a>");
+							} else {
+								response.setHeader("Cache-Control", "no-cache");
+								response.setHeader("Cache-Control", "no-store");
+								response.setHeader("Pragma", "no-cache");
+								response.setDateHeader("Expires", 0);
+								//out.print("<a href='Dashboard.jsp' id='ttab2' class='w3-button w3-right w3-padding-large w3-white w3-opacity w3-center'>"+Uname+"</a>");
+							}
+						%>
+
+						<div class="w3-dropdown-hover w3-right w3-transparent">
+							<button class="w3-button w3-padding-large w3-opacity w3-white">
+								Destination <i class="fa fa-caret-down"></i>
+							</button>
+							<div id="links2"
+								class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-opacity">
+								<a href="#" class="w3-bar-item w3-button w3-padding-large">Manali</a>
+								<a href="#" class="w3-bar-item w3-button w3-padding-large ">Shreenagar</a>
+								<a href="#" class="w3-bar-item w3-button w3-padding-large">Kutch</a>
+								<a href="#" class="w3-bar-item w3-button w3-padding-large">Goa</a>
+								<a href="#" class="w3-bar-item w3-button w3-padding-large">Maharashtra</a>
+							</div>
+						</div>
+						<div class="w3-dropdown-hover w3-right w3-transparent">
+							<button id="ttab1"
+								class="w3-button w3-padding-large w3-opacity w3-white">
+								Videos <i class="fa fa-caret-down"></i>
+							</button>
+							<div id="links1"
+								class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-opacity">
+								<a href="#" class="w3-bar-item w3-button w3-padding-large">Advanture
+									travel</a> <a href="#"
+									class="w3-bar-item w3-button w3-padding-large">Art and
+									culture</a> <a href="#"
+									class="w3-bar-item w3-button w3-padding-large">Beaches</a> <a
+									href="#" class="w3-bar-item w3-button w3-padding-large">Explore
+									Everyday</a> <a href="#"
+									class="w3-bar-item w3-button w3-padding-large">Journeys</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="w3-container" style="min-height: 680px;">
+					<div class="w3-display-middle w3-center w3-wide"
+						style="width: 100%; position: absolute;">
+						<h1 id="india"><%=CityName%><span style="font-size: 30px;">
+								<%=DataClass.getTagLine(PID)%></span>
+						</h1>
+					</div>
+				</div>
+			</div>
+			<!--END head for pc-->
+		</div>
+
+		<!--START head for mob, SEO:-->
+		<div class="">
+			<div id="bg"
+				class="w3-container w3-transparent w3-card-4 w3-hide-large"
+				style="position: relative;">
+				<div class="w3-bar">
+					<!--sidebar-->
+					<div id="mySidebar"
+						class="w3-sidebar w3-bar-block w3-collapse w3-teal w3-card-4 w3-animate-right w3-leftbar w3-border-white">
+
+						<%
+							if (((String) request.getAttribute("status")) == null) {
+								out.print(
+										"<a href='Consollogin.jsp' id='ttab2' class='w3-button w3-right w3-padding-large w3-white w3-opacity w3-center'>Login</a>");
+							} else {
+								//out.print("<a href='Dashboard.jsp' id='ttab2' class='w3-button w3-right w3-padding-large w3-white w3-opacity w3-center'>"+Uname+"</a>");
+							}
+						%>
+
+						<button
+							class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"
+							onclick="script1('videos')">
+							Videos <i class="fa fa-caret-down"></i>
+						</button>
+						<div id="videos"
+							class="w3-hide w3-transparent w3-animate-right w3-card-4">
+							<a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Advanture Travel</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Art and Culture</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Beaches</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Explore Everyday</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Journeys</a>
+						</div>
+
+						<button
+							class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"
+							onclick="script1('destination')">
+							Destination <i class="fa fa-caret-down"></i>
+						</button>
+						<div id="destination"
+							class="w3-hide w3-transparent w3-animate-right w3-card-4">
+							<a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Manali</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Shreenagar</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Kutch</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Goa</a> <a href="#"
+								class="w3-bar-item w3-transparent w3-hover-none w3-hover-text-green w3-button w3-large"><i
+								class="fa fa-angle-right"></i> Maharashtra</a>
+						</div>
+					</div>
+					<!--searchbar-->
+					<div id="mySearch"
+						class="w3-sidebar w3-bar-block w3-card-4 w3-collapse w3-teal w3-animate-top w3-border-bottom w3-bottombar w3-border-white">
+						<div class="w3-padding-large">
+							<input type="text"
+								class="w3-padding-large w3-bar-item w3-input w3-opacity w3-white"
+								placeholder="Search <%=CityName%>..."
+								style="float: left; width: 80%; border-top-left-radius: 1em;">
+							<button
+								style="float: right; width: 20%; border-bottom-right-radius: 1em;"
+								class="w3-bar-item w3-white w3-padding-large w3-opacity w3-right-align">
+								<i class="fa fa-search w3-large"></i>
+							</button>
+						</div>
+					</div>
+					<div class="w3-overlay w3-animate-opacity" onclick="w3_close()"
+						style="cursor: pointer" id="myOverlay"></div>
+					<div class="w3-overlay w3-animate-opacity"
+						onclick="w3_closeSearch()" style="cursor: pointer" id="myOverlay2"></div>
+					<button
+						class="w3-button w3-hover-none w3-xlarge w3-right w3-hide-large"
+						style="outline: none;" onclick="w3_open()">
+						<i class="fa fa-bars"></i>
+					</button>
+					<button
+						class="w3-button w3-hover-none w3-xlarge w3-left w3-hide-large"
+						style="outline: none;" onclick="w3_openSearch()">
+						<i class="fa fa-search"></i>
+					</button>
+					<div class="w3-container" style="min-height: 500px;">
+						<div class="w3-display-middle w3-center w3-wide w3-text-white"
+							style="width: 100%; position: absolute;">
+							<h1 id="smallIndia"><%=CityName%><span
+									style="font-size: 30px;"> <%=DataClass.getTagLine(PID)%></span>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--END head for mob-->
+		</div>
+		<!--START map, SEO:-->
+		<div class="">
+
+			<div class=" w3-section w3-center" id="map">
+				<h1 style="font-family: 'Raleway', sans-serif;" class="w3-wide">Search
+					Your favourite place on Map</h1>
+				<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+				<iframe width="100%" height="600" frameborder="0" style="border: 0"
+					src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDROu7RckZB4k2C9nSjZXOHeYdLJCzwSP8&q=<%=CityName%>"
+					allowfullscreen> </iframe>
+			</div>
+			<!--END map-->
+		</div>
+
+		<!--START about and gallery, SEO:-->
+		<div class="">
+
+			<div class="w3-row" style="min-height: 500px;">
+				<div id="about" class="w3-container w3-half w3-center">
+					<h1 style="font-family: 'Raleway', sans-serif;">
+						About <%=CityName%></h1>
+					<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+					<div class="aboutIndia w3-leftbar w3-border-blue w3-card-4">
+						<blockquote style="font-family: 'Raleway', sans-serif;">
+							<%
+								ResourceClass.setReadPlaceTextFile(PID, DataClass.getTextPath());
+							%>
+							<%=ResourceClass.textFile()%>
+						</blockquote>
+					</div>
+				</div>
+				<div id="gallery" class="w3-container w3-half">
+					<h1 style="font-family: 'Raleway', sans-serif;"
+						class="w3-wide w3-center">
+						Picture gallery of
+						<%=CityName%></h1>
+					<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+					<div class="w3-content w3-card-4">
+						<div class="w3-section" id="galSize" style="height: auto;">
+							<!-- img class="mySlides w3-animate-opacity" src="resources/Images/Place2.jpg" height="250px;" width="100%">
+				  		<img class="mySlides w3-animate-opacity" src="resources/Images/Place3.jpg" height="250px;" width="100%">
+				  		<img class="mySlides w3-animate-opacity" src="resources/Images/Place4.jpg" height="250px;" width="100%" -->
+							<%
+								Iterator<String> it = ResourceClass.setFetchImageGallery();
+								while (it.hasNext()) {
+							%>
+							<img class='mySlides w3-animate-opacity'
+								src='<c:url value="<%=it.next()%>"/>' style='width: 100%'>
+							<%
+								}
+							%>
+
+
+						</div>
+					</div>
+					<div class="w3-center">
+						<div class="w3-section">
+							<button class="w3-button w3-light-grey" onclick="plusDivs(-1)">Prev</button>
+							<button class="w3-button w3-light-grey" onclick="plusDivs(1)">Next</button>
+						</div>
+					</div>
+					<script>
+					var slideIndex = 1;
+					showDivs(slideIndex);
+					function plusDivs(n) {
+				  		showDivs(slideIndex += n);
+					}
+					function showDivs(n) {
+			  			var i;
+				  		var x = document.getElementsByClassName("mySlides");
+				  		var dots = document.getElementsByClassName("demo");
+				  		if (n > x.length) {slideIndex = 1}    
+				  		if (n < 1) {slideIndex = x.length}
+				  		for (i = 0; i < x.length; i++) {
+				     		x[i].style.display = "none";  
+				  		}
+				  		for (i = 0; i < dots.length; i++) {
+				     		dots[i].className = dots[i].className.replace(" w3-red", "");
+				  		}
+				  		x[slideIndex-1].style.display = "block";  
+				  		dots[slideIndex-1].className += " w3-red";
+					}
+				</script>
+				</div>
+			</div>
+			<!--END about and gallery-->
+		</div>
+
+		<!--START youtube videos, SEO:-->
+		<div class="">
+			<div class="w3-container w3-center" style="width: 100%;">
+				<h1 style="font-family: 'Raleway', sans-serif;"
+					class="w3-wide w3-center">Videos</h1>
+				<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+				<!--<div class="w3-display-container myVideos">
+				<iframe class="w3-border-0 w3-center" width="100%" id="frm" src="https:/www.youtube.com/embed/Q8TXgCzxEnw?rel=0" allowfullscreen></iframe>
+			</div>
+			<div class="w3-display-container myVideos">
+				<iframe class="w3-border-0 w3-center" width="100%" id="frm" src="https:/www.youtube.com/embed/gud7MD2PvrQ?rel=0" allowfullscreen></iframe>
+			</div>
+			<div class="w3-display-container myVideos">
+				<iframe class="w3-border-0 w3-center" width="100%" id="frm" src="https:/www.youtube.com/embed/rrT6v5sOwJg?rel=0" allowfullscreen></iframe>
+			</div>
+			  -->
+				<%
+					ResourceClass.setFetchYoutubeVideos();
+				%>
+				<%=ResourceClass.getYoutubeVideos()%>
+				<div class="w3-center">
+					<div class="scroll45 w3-padding-large">
+						<!--<img class="demo w3-opacity w3-hover-opacity-off" src="resources/Images/Place2.jpg" alt="vid1" style="max-height: 100px" onclick="currentVid(1)">&nbsp;&nbsp;&nbsp;
+					<img class="demo w3-opacity w3-hover-opacity-off" src="resources/Images/Place3.jpg" alt="vid1" style="max-height: 100px" onclick="currentVid(2)">&nbsp;&nbsp;&nbsp;
+					<img class="demo w3-opacity w3-hover-opacity-off" src="resources/Images/Place4.jpg" alt="vid1" style="max-height: 100px" onclick="currentVid(3)">&nbsp;&nbsp;&nbsp;
+					-->
+						<%
+							int i = 0;
+							Iterator<String> itrator = ResourceClass.setFetchYoutubeScreenIcon();
+							while (itrator.hasNext()) {
+								i += 1;
+						%>
+
+						<img class='demo w3-opacity w3-hover-opacity-off'
+							src='<c:url value="<%=itrator.next()%>"/>' alt='vid<%=i%>'
+							style='max-height: 100px;' onclick='currentVid(<%=i%>)'>
+						&nbsp;&nbsp;&nbsp;
+
+						<%
+							}
+						%>
+					</div>
+				</div>
+			</div>
+			<!--END youtube videos-->
+		</div>
+
+		<!--START top sights, SEO:-->
+		<div class="">
+			<div id="topSights" class="w3-section w3-center">
+				<h1 style="font-family: 'Raleway', sans-serif;" class="w3-wide">
+					Top sights in
+					<%=CityName%></h1>
+				<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+			</div>
+
+
+			<div class="w3-row w3-card-4 w3-padding-large"
+				style="font-family: 'Raleway', sans-serif;">
+				<%
+					int count = 0;
+					String G1 = "", G2 = "";
+					Map<String, String> images = ResourceClass.setFetchPlacesToVisit();
+					int imagesSize = images.size();
+					int b = imagesSize / 2;
+					out.println("<div class=\"w3-half w3-center\">");
+					for (Map.Entry<String, String> entry : images.entrySet()) {
+						if (count == b + 1) {
+							out.println("</div>");
+							out.println("<div class=\"w3-half w3-center\">");
+						}
+						if (count <= b) {
+				%>
+				<div style="font-family: 'Raleway', sans-serif; font-size: 20px;">
+					<a href="state.html" target="_blank"><img
+						src="<c:url value='<%=entry.getValue()%>'/>"
+						style="max-height: 150px; width: 80%" class="w3-round"><span><br><%=entry.getKey()%></span></a>
+				</div>
+				<br>
+				<%
+					} else {
+				%>
+				<div style="font-family: 'Raleway', sans-serif; font-size: 20px;">
+					<a href="#"><img src="<c:url value='<%=entry.getValue()%>'/>"
+						style="max-height: 150px; width: 80%;" class="w3-round"><span><br><%=entry.getKey()%></span></a>
+				</div>
+				<br>
+				<%
+					}
+						count++;
+					}
+					out.println("</div>");
+				%>
+			</div>
+			<!--END top sights-->
+		</div>
+
+		<!--START survival guide-->
+		<div class="">
+
+			<div class="w3-container">
+				<div id="survival" class="w3-section w3-center">
+					<h1 style="font-family: 'Raleway', sans-serif;" class="w3-wide">Survival
+						Guide</h1>
+					<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+				</div>
+				<div class="w3-row w3-card-4 w3-center w3-leftbar w3-border-blue"
+					style="font-family: 'Raleway', sans-serif;">
+					<div class="w3-half">
+						<a href="#" class="w3-button w3-hover-none"><img
+							src="<c:url value="/resources/Images/websites/survival.png"/>"
+							height="100px" width="100px">
+						<h3 class="w3-wide">Guide to survive</h3></a> <b><p
+								class="w3-padding w3-text-grey">Dull but essential passport
+								paperwork and entry info</p></b>
+					</div>
+
+					<div class="w3-half">
+						<a href="#" class="w3-button w3-hover-none"><img
+							src="<c:url value="/resources/Images/websites/survival.png"/>"
+							height="100px" width="100px">
+						<h3 class="w3-wide">Guide to survive</h3></a> <b><p
+								class="w3-padding w3-text-grey">Hit the ground at the right
+								time</p></b>
+					</div>
+				</div>
+			</div>
+			<!--END survival guide-->
+		</div>
+
+		<!--PRODUCTS-->
+		<div class="">
+
+			<div id="products" class="w3-section w3-center">
+				<h1 style="font-family: 'Raleway', sans-serif;" class="w3-wide">Our
+					Products</h1>
+				<hr style="width: 5%; height: 3px; margin: auto" class="w3-pink" />
+			</div>
+			<div class="w3-content w3-section w3-card-4">
+				<a href="#"><img class="myProducts w3-animate-opacity"
+					src="Images/Place2.jpg" style="width: 100%; height: 400px;"></a>
+				<a href="#"><img class="myProducts w3-animate-opacity"
+					src="Images/Place3.jpg" style="width: 100%; height: 400px;"></a>
+				<a href="#"><img class="myProducts w3-animate-opacity"
+					src="Images/Place4.jpg" style="width: 100%; height: 400px;"></a>
+			</div>
+			<script>
+			var myIndex = 0;
+			carousel();
+
+			function carousel() {
+		    	var i;
+		    	var x = document.getElementsByClassName("myProducts");
+		    	for (i = 0; i < x.length; i++) {
+		       		x[i].style.display = "none";  
+		    	}
+			myIndex++;
+		    	if (myIndex > x.length) {myIndex = 1}    
+		    	x[myIndex-1].style.display = "block";  
+		    	setTimeout(carousel, 5000);
+			}
+		</script>
+			<!--END products-->
+		</div>
+
+		<!--START footer for pc, SEO:-->
+		<br>
+		<br>
+		<br>
+		<br>
+		<div class="">
+
+			<footer class="w3-hide-medium w3-hide-small">
+			<div class="container">
+				<table class="w3-table">
+					<tr id="thead">
+						<th>Learn</th>
+						<th>Microsoft Store</th>
+						<th>Downloads</th>
+						<th>Values</th>
+						<th>Company</th>
+					</tr>
+					<tr id="tdata">
+						<td><a href="#">Windows</a></td>
+						<td><a href="#">View Account</a></td>
+						<td><a href="#">Download center</a></td>
+						<td><a href="#">Microsoft in education</a></td>
+						<td><a href="#">Careers</a></td>
+					</tr>
+					<tr id="tdata">
+						<td><a href="#">Office</a></td>
+						<td><a href="#">Order tracking</a></td>
+						<td><a href="#">Windows Download</a></td>
+						<td></td>
+						<td><a href="#">About Microsoft</a></td>
+					</tr>
+					<tr id="tdata">
+						<td><a href="#">Skype</a></td>
+						<td><a href="#">Returns</a></td>
+						<td><a href="#">Windows 10 apps</a></td>
+						<td></td>
+						<td><a href="#">Company News</a></td>
+					</tr>
+					<tr id="tdata">
+						<td><a href="#">Outlook</a></td>
+						<td><a href="#">Sales &amp; support</a></td>
+						<td><a href="#">Office Apps</a></td>
+						<td></td>
+						<td><a href="#">Site Map</a></td>
+					</tr>
+					<tr id="tdata">
+						<td><a href="#">OneDrive</a></td>
+						<td></td>
+						<td><a href="#">Microsoft Lumia apps</a></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr id="tdata">
+						<td><a href="#">MSN</a></td>
+						<td></td>
+						<td><a href="#">Internet Explorer</a></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+				<hr style="height: 1px;" class="w3-grey">
+				<p class="w3-center">Copyright</p>
+			</div>
+			</footer>
+			<!--END footer-->
+		</div>
+
+		<!--START footer for mob, SEO:-->
+		<div class="">
+
+			<footer class="w3-hide-large" style="position: relative;">
+			<button class="w3-button w3-block w3-large"
+				onclick="script1('Learn')" style="text-align: left;">
+				<i class="fa fa-caret-down"></i> <span>Learn</span>
+			</button>
+			<div id="Learn" class="w3-hide w3-white w3-animate-bottom w3-card-4">
+				<a href="#" class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Windows</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Office</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Skype</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Outlook</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Onedrive</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">MSN</a>
+			</div>
+			<button class="w3-button w3-block w3-large"
+				onclick="script1('MSStore')" style="text-align: left;">
+				<i class="fa fa-caret-down"></i> <span>Microsoft Store</span>
+			</button>
+			<div id="MSStore"
+				class="w3-hide w3-white w3-animate-bottom w3-card-4">
+				<a href="#" class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">View account</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Order Tracking</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Returns</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Sales &amp; support</a>
+			</div>
+			<button class="w3-button w3-block w3-large"
+				onclick="script1('Downloads')" style="text-align: left;">
+				<i class="fa fa-caret-down"></i> <span>Downloads</span>
+			</button>
+			<div id="Downloads"
+				class="w3-hide w3-white w3-animate-bottom w3-card-4">
+				<a href="#" class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Download center</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Windows Download</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Windows 10 apps</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Office apps</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Lumia apps</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Internet explorer</a>
+			</div>
+			<button class="w3-button w3-block w3-large"
+				onclick="script1('Values')" style="text-align: left;">
+				<i class="fa fa-caret-down"></i> <span>Values</span>
+			</button>
+			<div id="Values" class="w3-hide w3-white w3-animate-bottom w3-card-4">
+				<a href="#" class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Microsoft in education</a>
+			</div>
+			<button class="w3-button w3-block w3-large"
+				onclick="script1('Company')" style="text-align: left;">
+				<i class="fa fa-caret-down"></i> <span>Company</span>
+			</button>
+			<div id="Company"
+				class="w3-hide w3-white w3-animate-bottom w3-card-4">
+				<a href="#" class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Careers</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">About Microsoft</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Company News</a> <a href="#"
+					class="w3-button w3-block w3-teal w3-large"
+					style="text-align: left;">Site map</a>
+			</div>
+			<div class="container-fluid">
+				<p class="w3-center">Copyright</p>
+			</div>
+			</footer>
+			<!--END footer for mob-->
+		</div>
+
+		<!--END main class-->
+	</div>
+	<!--START navbar, SEO:-->
+	<div class="">
+		<br>
+		<br>
+		<br>
+		<div class="w3-center w3-bottom">
+			<div class="scroll45 w3-black w3-large">
+				<a href="#about"
+					class="w3-bar-item w3-button w3-padding-large w3-hover-none w3-hover-text-blue">Explore
+					<%=CityName%></a> <a href="#gallery"
+					class="w3-bar-item w3-button w3-padding-large w3-hover-none w3-hover-text-blue">Gallery</a>
+				<a href="#topSights"
+					class="w3-bar-item w3-button w3-padding-large w3-hover-none w3-hover-text-blue">Top
+					Sights</a> <a href="#map"
+					class="w3-bar-item w3-button w3-padding-large w3-hover-none w3-hover-text-blue">Map</a>
+				<a href="#survival"
+					class="w3-bar-item w3-button w3-padding-large w3-hover-none w3-hover-text-blue">Survival</a>
+				<a href="#products"
+					class="w3-bar-item w3-button w3-padding-large w3-hover-none w3-hover-text-blue">Products</a>
+			</div>
+		</div>
+		<!--END navbar-->
+	</div>
+
+	<script type="text/javascript">
+	function script1(id){
+	    var x = document.getElementById(id);
+	   	if(x.className.indexOf("w3-show") === -1){
+	 		x.className += " w3-show";
+	    }
+		else{
+	      	x.className = x.className.replace("w3-show","");
+	    }	
+	}
+	var vidIndex = 1;
+	showVids(vidIndex);
+	        
+	function currentVid(n){
+		showVids(vidIndex = n);
+	}
+	function showVids(n){
+		var i;
+		var x = document.getElementsByClassName("myVideos");
+		var dots = document.getElementsByClassName("demo");
+		if(n > x.length) {vidIndex = 1;}
+		if(n < 1) {vidIndex = x.length;}
+		for(i = 0; i < x.length; i++){
+			x[i].style.display = "none";
+	    }
+		for(var i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+		}
+		x[vidIndex-1].style.display = "block";
+		dots[vidIndex-1].className += " w3-opacity-off";
+	}
+	function w3_open() {
+	    document.getElementById("mySidebar").style.display = "block";
+	    document.getElementById("myOverlay").style.display = "block";
+	}
+	function w3_close() {
+	    document.getElementById("mySidebar").style.display = "none";
+	    document.getElementById("myOverlay").style.display = "none";
+	}
+	function w3_openSearch() {
+	    document.getElementById("mySearch").style.display = "block";
+	    document.getElementById("myOverlay2").style.display = "block";
+	}
+	function w3_closeSearch() {
+	    document.getElementById("mySearch").style.display = "none";
+	    document.getElementById("myOverlay2").style.display = "none";
+	}
+</script>
+</body>
+</html>
